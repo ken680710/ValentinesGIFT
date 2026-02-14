@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>I'm Sorry</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Ading nako', serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 600px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            text-align: center;
+        }
+
+        h1 {
+            color: #764ba2;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+
+        .heart {
+            font-size: 3em;
+            color: #e74c3c;
+            animation: heartbeat 1.5s infinite;
+            display: inline-block;
+            margin: 20px 0;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            10%, 30% { transform: scale(1.1); }
+            20%, 40% { transform: scale(1); }
+        }
+
+        .message {
+            font-size: 1.2em;
+            color: #333;
+            line-height: 1.6;
+            margin: 20px 0;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.1em;
+            border-radius: 50px;
+            cursor: pointer;
+            margin: 10px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .flower {
+            font-size: 2em;
+            display: inline-block;
+            margin: 5px;
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .flowers-container {
+            margin: 20px 0;
+            min-height: 60px;
+        }
+
+        #finalMessage {
+            background: linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%);
+            padding: 20px;
+            border-radius: 15px;
+            margin-top: 20px;
+            animation: slideIn 0.5s;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .question {
+            font-size: 1.3em;
+            color: #2d3436;
+            margin: 20px 0;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="step1">
+            <h1>I'm really sorry ading nako🥺🥺🥺</h1>
+            <div class="heart">❤️</div>
+            <p class="message">
+                I know I messed up and hurt you, and I want to make things right. Please forgive me for my mistakes. I promise to be better and show you how much you mean to me.
+            </p>
+            <button class="btn" onclick="nextStep(2)">Forgive Me</button>
+        </div>
+
+        <div id="step2" class="hidden">
+            <h1>I Was Wrong</h1>
+            <div class="heart">💔</div>
+            <p class="message">
+                What I did was thoughtless and I take full responsibility.
+                You deserve so much better, and I want to make things right.
+            </p>
+            <button class="btn" onclick="nextStep(3)">Keep Reading...</button>
+        </div>
+
+        <div id="step3" class="hidden">
+            <h1>Please Give Me Another Chance</h1>
+            <div class="heart">💖</div>
+            <p class="message">
+                Every moment with you is a gift. Your smile, your laugh, 
+                the way you care about others - you're absolutely amazing.
+                I don't want to lose what we have.
+            </p>
+            <button class="btn" onclick="nextStep(4)">Almost There...</button>
+        </div>
+
+        <div id="step4" class="hidden">
+            <p class="question">Can you find it in your heart to forgive me?</p>
+            <button class="btn" onclick="yesClicked()">Yes</button>
+            <button class="btn" id="noBtn" onclick="noClicked()">No</button>
+        </div>
+
+        <div id="step5" class="hidden">
+            <h1>Thank You So Much! 😍</h1>
+            <div class="flowers-container" id="flowersContainer"></div>
+            <div id="finalMessage">
+                <p class="message">
+                    I promise to be better and to cherish every moment with you.
+                    Thank you for giving me another chance. I love you! ❤️
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let noClickCount = 0;
+
+        function nextStep(step) {
+            document.querySelectorAll('[id^="step"]').forEach(el => {
+                el.classList.add('hidden');
+            });
+            document.getElementById('step' + step).classList.remove('hidden');
+        }
+
+        function yesClicked() {
+            nextStep(5);
+            showFlowers();
+        }
+
+        function noClicked() {
+            const noBtn = document.getElementById('noBtn');
+            noClickCount++;
+            
+            const messages = [
+                "Please? 🥺",
+                "Pretty please? 🙏",
+                "I really mean it... 💕",
+                "One more chance? 😢"
+            ];
+            
+            if (noClickCount < messages.length) {
+                noBtn.textContent = messages[noClickCount];
+            } else {
+                noBtn.style.display = 'none';
+                alert("I'll keep trying to make it up to you! ❤️");
+            }
+        }
+
+        function showFlowers() {
+            const flowers = ['🌹', '🌸', '🌺', '🌻', '🌷', '🌼', '💐'];
+            const container = document.getElementById('flowersContainer');
+            
+            for (let i = 0; i < 15; i++) {
+                setTimeout(() => {
+                    const flower = document.createElement('span');
+                    flower.className = 'flower';
+                    flower.textContent = flowers[Math.floor(Math.random() * flowers.length)];
+                    container.appendChild(flower);
+                }, i * 100);
+            }
+        }
+    </script>
+</body>
+</htm>
